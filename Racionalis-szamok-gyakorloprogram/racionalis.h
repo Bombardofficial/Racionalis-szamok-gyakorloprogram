@@ -6,6 +6,7 @@ public:
 	racionalis(int szamlalo = 0, int nevezo = 1) : szamlalo(szamlalo), nevezo(nevezo) {}
 	void kiiras();
 	bool egyenloe(racionalis b);
+	bool pontosanegyenloe(racionalis b);
 	void konnyu();
 	void halado();
 	void nehez();
@@ -19,6 +20,7 @@ public:
 	racionalis osszeadas(racionalis b);
 	racionalis kivonas(racionalis b);
 	racionalis egyszerusites();
+	racionalis reciprok();
 	
 	int random1();
 	int random2();

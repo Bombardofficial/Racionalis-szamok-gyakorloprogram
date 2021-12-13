@@ -7,7 +7,7 @@ using namespace std;
 
 void racionalis::kiiras()
 {
-	cout << szamlalo << muvelet << nevezo << " ";
+	cout << szamlalo << '/' << nevezo << " ";
 }
 
 int racionalis::random1()
@@ -30,20 +30,27 @@ bool racionalis::egyenloe(racionalis b) {
 	racionalis begysz = b.egyszerusites();
 	return thisegysz.szamlalo == begysz.szamlalo && thisegysz.nevezo == begysz.nevezo;
 }
-
+bool racionalis::pontosanegyenloe(racionalis b) {
+	return this->szamlalo == b.szamlalo && this->nevezo == b.nevezo;
+}
+racionalis racionalis::reciprok()
+{
+	return racionalis(nevezo, szamlalo);
+}
 racionalis racionalis::osztas(racionalis b)
 {
-	return racionalis(this->szamlalo / b.szamlalo, this->nevezo / b.nevezo);
+	return this->szorzas(b.reciprok());
+	//return racionalis(this->szamlalo * b.nevezo, this->nevezo * b.szamlalo);
 }
 
 racionalis racionalis::osszeadas(racionalis b)
 {
-	return racionalis(this->szamlalo + b.szamlalo, this->nevezo + b.nevezo);
+	return racionalis((this->szamlalo*b.nevezo) + (b.szamlalo*this->nevezo), this->nevezo * b.nevezo).egyszerusites();
 }
 
 racionalis racionalis::kivonas(racionalis b)
 {
-	return racionalis(this->szamlalo - b.szamlalo, this->nevezo - b.nevezo);
+	return racionalis((this->szamlalo * b.nevezo) - (b.szamlalo * this->nevezo), this->nevezo * b.nevezo).egyszerusites();
 }
 
 racionalis racionalis::egyszerusites()
@@ -85,13 +92,13 @@ racionalis racionalis::egyszerusites()
 
 racionalis racionalis::szorzas(racionalis b)
 {
-	return racionalis(this->szamlalo * b.szamlalo, this->nevezo * b.nevezo);
+	return racionalis(this->szamlalo * b.szamlalo, this->nevezo * b.nevezo).egyszerusites();
 }
 
 void racionalis::konnyu() 
 {
 
-	cout << "Konnyu szint :\n\n	- 10 feladat kovetkezik\n	- Muveletek: szorzas\n	- Egyszerusites: nincs\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
+	cout << "Konnyu szint :\n\n	- 10 feladat kovetkezik\n	- Muveletek: szorzas\n	- Egyszerusites: nem kotelezo\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
 	system("pause");
 	system("cls");
 	muvelet = '*';
@@ -106,10 +113,10 @@ void racionalis::konnyu()
 	if (jomegoldas < 5) {
 		cout << "Sajnos az eredmeny nem valami fenyes. "<<jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
 	}
-	else if (jomegoldas < 8 && jomegoldas > 5) {
+	else if (jomegoldas < 8 && jomegoldas >= 5) {
 		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
 	}
-	else if (jomegoldas < 10 && jomegoldas > 8) {
+	else if (jomegoldas < 10 && jomegoldas >= 8) {
 		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizbol.\nHa hibatlan lesz, akkor tovabblephetsz a kovetkezo szintre!" << endl;
 	}
 	else {
@@ -135,12 +142,14 @@ void racionalis::konnyu()
 			break;
 		}
 	}
+	feladatszam = 0;
+	jomegoldas = 0;
 }
 
 void racionalis::halado() 
 {
 
-	cout << "Halado szint :\n\n	- 10 feladat kovetkezik\n	- Muveletek: szorzas es osztas\n	- Egyszerusites: nincs\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
+	cout << "Halado szint :\n\n	- 10 feladat kovetkezik\n	- Muveletek: szorzas es osztas\n	- Egyszerusites: nem kotelezo\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
 	system("pause");
 	system("cls");
 
@@ -154,10 +163,10 @@ void racionalis::halado()
 	if (jomegoldas < 5) {
 		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
 	}
-	else if (jomegoldas < 8 && jomegoldas > 5) {
+	else if (jomegoldas < 8 && jomegoldas >= 5) {
 		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
 	}
-	else if (jomegoldas < 10 && jomegoldas > 8) {
+	else if (jomegoldas < 10 && jomegoldas >= 8) {
 		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizbol.\nHa hibatlan lesz, akkor tovabblephetsz a kovetkezo szintre!" << endl;
 	}
 	else {
@@ -173,7 +182,7 @@ void racionalis::halado()
 			system("cls");
 			szamlalo = 0;
 			nevezo = 0;
-			halado();
+			nehez();
 			break;
 		case 'n':
 			exit(0);
@@ -183,12 +192,14 @@ void racionalis::halado()
 			break;
 		}
 	}
+	feladatszam = 0;
+	jomegoldas = 0;
 }
 
 void racionalis::nehez() 
 {
 
-	cout << "Nehez szint :\n\n	- 15 feladat kovetkezik\n	- Muveletek: osszeadas, kivonas, szorzas es osztas\n	- Egyszerusites: nincs\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
+	cout << "Nehez szint :\n\n	- 15 feladat kovetkezik\n	- Muveletek: osszeadas, kivonas, szorzas es osztas\n	- Egyszerusites: nem kotelezo\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
 	system("pause");
 	system("cls");
 
@@ -199,20 +210,20 @@ void racionalis::nehez()
 		feladatszam++;
 	}
 
-	if (jomegoldas < 5) {
-		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
+	if (jomegoldas < 8) {
+		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizenotbol.\nProbald meg megegyszer!" << endl;
 	}
-	else if (jomegoldas < 8 && jomegoldas > 5) {
-		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
+	else if (jomegoldas < 13 && jomegoldas >= 8) {
+		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizenotbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
 	}
-	else if (jomegoldas < 10 && jomegoldas > 8) {
-		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizbol.\nHa hibatlan lesz, akkor tovabblephetsz a kovetkezo szintre!" << endl;
+	else if (jomegoldas < 15 && jomegoldas >= 13) {
+		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizenotbol.\nHa hibatlan lesz, akkor tovabblephetsz a kovetkezo szintre!" << endl;
 	}
 	else {
-		cout << "Gratulalok! " << jomegoldas << " feladat helyes a tizbol.\nHibatlan! Lepj tovabb a kovetkezo szintre, hogy tesztelhesd tudasod osszeadasnal, kivonasnal, osztasnal es szorzasnal egyarant komplexebb szamokkal tobb feladat formalyaban!\n" << endl;
+		cout << "Gratulalok! " << jomegoldas << " feladat helyes a tizenotbol.\nHibatlan! Lepj tovabb a kovetkezo szintre, hogy tesztelhesd tudasod osszeadasnal, kivonasnal, osztasnal es szorzasnal egyarant komplexebb szamokkal tobb feladat formalyaban!\n" << endl;
 	}
-
-	if (jomegoldas == 10) {
+	
+	if (jomegoldas == 15) {
 		cout << "\n\nSzeretned kiprobalni magad brutalis szinten? \nCsak akkor probald ki, ha ugy gondolod maximalisan elsajatitottad a tananyagot! (y/n)" << endl << endl;
 		char megegy;
 		cin >> megegy;
@@ -221,7 +232,7 @@ void racionalis::nehez()
 			system("cls");
 			szamlalo = 0;
 			nevezo = 0;
-			nehez(); //IRD AT MAJD BRUTALISRA!!! AHOGY A HALADOBAN A HALADOT NEHEZRE
+			brutalis();
 			break;
 		case 'n':
 			exit(0);
@@ -231,11 +242,13 @@ void racionalis::nehez()
 			break;
 		}
 	}
+	feladatszam = 0;
+	jomegoldas = 0;
 }
 void racionalis::brutalis() 
 {
 
-	cout << "Brutalis szint :\n\n	- 15 feladat kovetkezik komplex szamokkal\n	- Muveletek: osszeadas, kivonas, szorzas es osztas\n	- Egyszerusites: van (!!!)\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
+	cout << "Brutalis szint :\n\n	- 15 feladat kovetkezik komplex szamokkal\n	- Muveletek: osszeadas, kivonas, szorzas es osztas\n	- Egyszerusites: kotelezo, redukalt alakra (!!!)\n\nNyomj Enter-t ha keszen allsz!\n" << endl;
 	system("pause");
 	system("cls");
 
@@ -246,20 +259,21 @@ void racionalis::brutalis()
 		feladatszam++;
 	}
 
-	if (jomegoldas < 5) {
-		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
+	if (jomegoldas < 8) {
+		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizenotbol.\nProbald meg megegyszer!" << endl;
 	}
-	else if (jomegoldas < 8 && jomegoldas > 5) {
-		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
+	else if (jomegoldas < 13 && jomegoldas >= 8) {
+		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizenotbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
 	}
-	else if (jomegoldas < 10 && jomegoldas > 8) {
-		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizbol.\nHa hibatlan lesz, akkor tovabblephetsz a kovetkezo szintre!" << endl;
+	else if (jomegoldas < 15 && jomegoldas >=13) {
+		cout << "Szep munka! " << jomegoldas << " feladat helyes a tizenotbol." << endl;
 	}
 	else {
-		cout << "Gratulalok! " << jomegoldas << " feladat helyes a tizbol.\nHibatlan!\n" << endl;
+		cout << "Gratulalok! " << jomegoldas << " feladat helyes a tizenotbol.\nHibatlan!\n" << endl;
 	}
-
-	cout << "\nNincs több szint. Gratulálok! Sikeresen elsajatitottad a racionalis szamokkal torteno muveleteket!";
+	feladatszam = 0;
+	jomegoldas = 0;
+	cout << "\nNincs tobb szint. Gratulalok! Sikeresen elsajatitottad a racionalis szamokkal torteno muveleteket!";
 	exit(0);
 
 }
@@ -284,6 +298,8 @@ void racionalis::konnyu_feladat() //viszi az eredmenyt a konnyu()be majd mindig 
 	cin >> nev_er;
 
 	racionalis elvart = a.szorzas(b);
+	cout << "\nEredmeny: ";
+	elvart.kiiras();
 	racionalis beadott(szaml_er, nev_er);
 	if (elvart.egyenloe(beadott))
 	{
@@ -297,8 +313,7 @@ void racionalis::konnyu_feladat() //viszi az eredmenyt a konnyu()be majd mindig 
 
 	if (feladatszam == 10) {
 		cout << "Vege a feladatsornak. Nezd meg az eredmenyt!\nNyomj Enter-t a folytatashoz!\n" << endl;
-		feladatszam = 0;
-		jomegoldas = 0;
+		
 		system("pause");
 		system("cls");
 	}
@@ -322,12 +337,6 @@ void racionalis::halado_feladat()
 	racionalis b(random2(), random1());
 	int random_muv = random_muv_halado();
 
-	if (random_muv >= 5) {
-		muvelet = '/';
-	}
-	else {
-		muvelet = '*';
-	}
 
 	a.kiiras();
 	if (random_muv >= 5) {
@@ -349,11 +358,15 @@ void racionalis::halado_feladat()
 	cin >> nev_er;
 
 	if (random_muv >= 5) {
-		racionalis elvart = a.osztas(b);
+		elvart = a.osztas(b);
+		
 	}
 	else {
-		racionalis elvart = a.szorzas(b);
+		elvart = a.szorzas(b);
+		
 	}
+	cout << "\nEredmeny: ";
+	elvart.kiiras();
 	racionalis beadott(szaml_er, nev_er);
 	if (elvart.egyenloe(beadott)) {
 		cout << "\nJo megoldas!\n" << endl;
@@ -370,8 +383,7 @@ void racionalis::halado_feladat()
 	}
 	else {
 		cout << "Johet a kovetkezo feladat?\nNyomj Enter-t a folytatashoz!\n" << endl;
-		feladatszam = 0;
-		jomegoldas = 0;
+		
 		system("pause");
 		system("cls");
 	}
@@ -386,26 +398,15 @@ void racionalis::nehez_feladat()
 	racionalis a(random2(), random2());
 	racionalis b(random2(), random2());
 	int random_muv = random_muv_halado();
-	if (random_muv >= 5) {
-		muvelet = '/';
-	}
-	else if (random_muv >= 10 && random_muv < 5) {
-		muvelet = '+';
-	}
-	else if (random_muv >= 15 && random_muv < 10) {
-		muvelet = '-';
-	}
-	else {
-		muvelet = '*';
-	}
+	
 	a.kiiras();
-	if (random_muv >= 5) {
+	if (random_muv <= 5) {
 		cout << "/ ";
 	}
-	else if (random_muv >= 10 && random_muv < 5) {
+	else if (random_muv <= 10 && random_muv > 5) {
 		cout << "+ ";
 	}
-	else if (random_muv >= 15 && random_muv < 10) {
+	else if (random_muv <= 15 && random_muv > 10) {
 		cout << "- ";
 	}
 	else {
@@ -421,18 +422,20 @@ void racionalis::nehez_feladat()
 	cout << "Mi lesz a nevezo?\n>";
 	cin >> nev_er;
 
-	if (random_muv >= 5) {
-		racionalis elvart = a.osztas(b);
+	if (random_muv <= 5) {
+		elvart = a.osztas(b);
 	}
-	else if (random_muv >= 10 && random_muv < 5) {
-		racionalis elvart = a.osszeadas(b);
+	else if (random_muv <= 10 && random_muv > 5) {
+		elvart = a.osszeadas(b);
 	}
-	else if (random_muv >= 15 && random_muv < 10) {
-		racionalis elvart = a.kivonas(b);
+	else if (random_muv <= 15 && random_muv > 10) {
+		elvart = a.kivonas(b);
 	}
 	else {
-		racionalis elvart = a.szorzas(b);
+		elvart = a.szorzas(b);
 	}
+	cout << "\nEredmeny: ";
+	elvart.kiiras();
 	racionalis beadott(szaml_er, nev_er);
 	if (elvart.egyenloe(beadott))
 	{
@@ -444,24 +447,19 @@ void racionalis::nehez_feladat()
 
 	}
 
-	if (feladatszam == 10) {
+	if (feladatszam == 15) {
 		cout << "Vege a feladatsornak. Nezd meg az eredmenyt!\nNyomj Enter-t a folytatashoz!\n" << endl;
 		system("pause");
 		system("cls");
 	}
 	else {
 		cout << "Johet a kovetkezo feladat?\nNyomj Enter-t a folytatashoz!\n" << endl;
-		feladatszam = 0;
-		jomegoldas = 0;
+		
 		system("pause");
 		system("cls");
 	}
 }
 
-int racionalis::random_muv_nehez() 
-{
-	return rand() % 20 + 1;
-}
 void racionalis::brutalis_feladat()
 {
 
@@ -470,27 +468,15 @@ void racionalis::brutalis_feladat()
 	racionalis b(random3(), random2());
 	int random_muv = random_muv_nehez();
 
-	if (random_muv >= 5) {
-		muvelet = '/';
-	}
-	else if (random_muv >= 10 && random_muv < 5) {
-		muvelet = '+';
-	}
-	else if (random_muv >= 15 && random_muv < 10) {
-		muvelet = '-';
-	}
-	else {
-		muvelet = '*';
-	}
-
+	
 	a.kiiras();
-	if (random_muv >= 5) {
+	if (random_muv <= 5) {
 		cout << "/ ";
 	}
-	else if (random_muv >= 10 && random_muv < 5) {
+	else if (random_muv <= 10 && random_muv > 5) {
 		cout << "+ ";
 	}
-	else if (random_muv >= 15 && random_muv < 10) {
+	else if (random_muv <= 15 && random_muv > 10) {
 		cout << "- ";
 	}
 	else {
@@ -507,20 +493,22 @@ void racionalis::brutalis_feladat()
 	cout << "Mi lesz a nevezo?\n>";
 	cin >> nev_er;
 
-	if (random_muv >= 5) {
-		racionalis elvart = a.osztas(b);
+	if (random_muv <= 5) {
+		elvart = a.osztas(b);
 	}
-	else if (random_muv >= 10 && random_muv < 5) {
-		racionalis elvart = a.osszeadas(b);
+	else if (random_muv <= 10 && random_muv > 5) {
+		elvart = a.osszeadas(b);
 	}
-	else if (random_muv >= 15 && random_muv < 10) {
-		racionalis elvart = a.kivonas(b);
+	else if (random_muv <= 15 && random_muv > 10) {
+		elvart = a.kivonas(b);
 	}
 	else {
-		racionalis elvart = a.szorzas(b);
+		elvart = a.szorzas(b);
 	}
+	cout << "\nEredmeny: ";
+	elvart.kiiras();
 	racionalis beadott(szaml_er, nev_er);
-	if (elvart.egyenloe(beadott))
+	if (elvart.pontosanegyenloe(beadott))
 	{
 		cout << "\nJo megoldas!\n" << endl;
 		jomegoldas++;
@@ -530,15 +518,14 @@ void racionalis::brutalis_feladat()
 
 	}
 
-	if (feladatszam == 10) {
+	if (feladatszam == 15) {
 		cout << "Vege a feladatsornak. Nezd meg az eredmenyt!\nNyomj Enter-t a folytatashoz!\n" << endl;
 		system("pause");
 		system("cls");
 	}
 	else {
 		cout << "Johet a kovetkezo feladat?\nNyomj Enter-t a folytatashoz!\n" << endl;
-		feladatszam = 0;
-		jomegoldas = 0;
+		
 		system("pause");
 		system("cls");
 	}

@@ -24,12 +24,24 @@
     <ClCompile Include="racionalis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="feladatsor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="feladat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tarolo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="racionalis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feladatsor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feladat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,8 +2,9 @@
 #include <iostream>
 #include <math.h>
 #include <bits/stdc++.h>
+#include "feladat.h"
 
-using namespace std;
+//using namespace std;
 
 void racionalis::kiiras()
 {
@@ -58,6 +59,7 @@ racionalis racionalis::egyszerusites()
 	if (nevezo == 0) {
 		cout << szamlalo << "/" << nevezo << " -> ";
 		cout << "A nevezo nem lehet negativ, ezaltal nem is egyszerusitheto." << endl << endl;
+		return *this;
 	}
 	else {
 
@@ -111,7 +113,7 @@ void racionalis::konnyu()
 	}
 
 	if (jomegoldas < 5) {
-		cout << "Sajnos az eredmeny nem valami fenyes. "<<jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
+		cout << "Sajnos az eredmeny nem valami fenyes. " << jomegoldas << " feladat helyes a tizbol.\nProbald meg megegyszer!" << endl;
 	}
 	else if (jomegoldas < 8 && jomegoldas >= 5) {
 		cout << "Egesz jol sikerult! " << jomegoldas << " feladat helyes a tizbol.\nProbald meg meg jobb eredmenyt elerni!" << endl;
@@ -283,8 +285,26 @@ void racionalis::konnyu_feladat() //viszi az eredmenyt a konnyu()be majd mindig 
 
 	racionalis a(random1(), random1());
 	racionalis b(random1(), random1());
+	feladat f(a, '*', b);
+	f.kiir();
+	int szaml_er;
+	cout << "Mi lesz a szamlalo?\n>";
+	cin >> szaml_er;
+	cout << "\n";
+	int nev_er;
+	cout << "Mi lesz a nevezo?\n>";
+	cin >> nev_er;
+	racionalis beadott(szaml_er, nev_er);
+	if (f.ellenorzes(beadott))
+	{
+		cout << "\nJo megoldas!\n" << endl;
+		jomegoldas++;
+	}
+	else {
+		cout << "\nNem jo megoldas!\n" << endl;
 
-	a.kiiras();
+	}
+/*	a.kiiras();
 	cout << "* ";
 	b.kiiras();
 	cout << "= ?\n\n";
@@ -310,6 +330,7 @@ void racionalis::konnyu_feladat() //viszi az eredmenyt a konnyu()be majd mindig 
 		cout << "\nNem jo megoldas!\n" << endl;
 		
 	}
+	*/
 
 	if (feladatszam == 10) {
 		cout << "Vege a feladatsornak. Nezd meg az eredmenyt!\nNyomj Enter-t a folytatashoz!\n" << endl;
@@ -529,4 +550,9 @@ void racionalis::brutalis_feladat()
 		system("pause");
 		system("cls");
 	}
+}
+
+ostream& operator<<(ostream& os, const racionalis& ki) {
+	os << ki.szamlalo << "/" << ki.nevezo;
+	return os;
 }

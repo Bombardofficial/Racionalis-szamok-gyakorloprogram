@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+
+using namespace std;
 
 class racionalis
 {
@@ -21,6 +24,7 @@ public:
 	racionalis kivonas(racionalis b);
 	racionalis egyszerusites();
 	racionalis reciprok();
+	friend ostream& operator<<(ostream& os, const racionalis& ki);
 	
 	int random1();
 	int random2();
@@ -35,3 +39,4 @@ private:
 	char muvelet;
 };
 
+ostream& operator<<(ostream& os, const racionalis& ki);

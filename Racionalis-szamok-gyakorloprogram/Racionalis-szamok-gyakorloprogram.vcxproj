@@ -143,13 +143,11 @@
     <ClCompile Include="feladatsor.cpp" />
     <ClCompile Include="Racionalis-szamok-gyakorloprogram.cpp" />
     <ClCompile Include="racionalis.cpp" />
-    <ClCompile Include="tarolo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feladat.h" />
     <ClInclude Include="feladatsor.h" />
     <ClInclude Include="racionalis.h" />
-    <ClInclude Include="tarolo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
